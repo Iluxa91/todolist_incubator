@@ -1,5 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import styles from "./Todolist.module.css";
+import {IconButton, TextField} from "@material-ui/core";
+import {AddCircleOutline} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -27,14 +29,24 @@ export const AddItemForm = (props: AddItemFormPropsType) => {
     }
     return (
         <div>
-            <input
-                className={error ? styles.error : ''}
-                value={title}
-                onChange={onChangeHandler}
-                onKeyPress={onKeyPressHandler}
+            {/*<input*/}
+            {/*    className={error ? styles.error : ''}*/}
+            {/*    value={title}*/}
+            {/*    onChange={onChangeHandler}*/}
+            {/*    onKeyPress={onKeyPressHandler}*/}
+            {/*/>*/}
+            <TextField
+            size={'small'}
+            variant={"outlined"}
+            value={title}
+            onChange={onChangeHandler}
+            onKeyPress={onKeyPressHandler}
+            label={'title'}
+            error={!!error}
+            helperText={error&&"Title is required"}
             />
-            <button onClick={addItem}>+</button>
-            {error && <div className={styles.errorMessage}>Title is required</div>}
+            <IconButton onClick={addItem}><AddCircleOutline/></IconButton>
+            {/*{error && <div className={styles.errorMessage}>Title is required</div>}*/}
         </div>
     );
 };

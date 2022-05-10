@@ -1,10 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType} from './App';
 import styles from './Todolist.module.css'
-import {Button} from "./components/Button";
-import {CheckBox} from "./components/CheckBox";
+
+// import {CheckBox} from "./components/CheckBox";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import {Button, Checkbox, IconButton, List} from "@material-ui/core";
+import {DeleteOutline, HighlightOff} from "@material-ui/icons";
 
 type TaskType = {
     id: string
@@ -45,10 +47,11 @@ export function Todolist(props: PropsType) {
     return <div>
         <h3>
             <EditableSpan title={props.title} setNewTitle={changeTodoListTitle}/>
-            <button onClick={removeTodoList}>x</button>
+            <IconButton
+                onClick={removeTodoList}><DeleteOutline/></IconButton>
         </h3>
         <AddItemForm addItem={addTask}/>
-        <ul>
+        <List>
             {
                 props.tasks.map(t => {
                     const CheckBoxHandler = (checkedValue: boolean) => {
@@ -58,22 +61,54 @@ export function Todolist(props: PropsType) {
                         props.changeTaskTitle(t.id, title, props.toDoListId)
                     }
                     return <li key={t.id}>
-                        <CheckBox isDone={t.isDone} callBack={CheckBoxHandler}/>
+
+                        <Checkbox
+                            checked={t.isDone}
+                            onChange={() => CheckBoxHandler(!t.isDone)}
+                            color={'primary'}
+                        />
                         <EditableSpan title={t.title} setNewTitle={changeTaskTitle}/>
                         {/*<span>{t.title}</span>*/}
-                        <button onClick={() => onClickHandler(t.id)}>x</button>
+                        <IconButton
+                            size={'small'}
+                            onClick={() => onClickHandler(t.id)}><HighlightOff/></IconButton>
                     </li>
                 })
             }
-        </ul>
+        </List>
         <div>
 
-            <Button name={'all'} callBack={() => changeFilterHandler('all')}
-                    className={props.filter === 'all' ? styles.activeFilter : ''}/>
-            <Button name={'active'} callBack={() => changeFilterHandler('active')}
-                    className={props.filter === 'active' ? styles.activeFilter : ''}/>
-            <Button name={'completed'} callBack={() => changeFilterHandler('completed')}
-                    className={props.filter === 'completed' ? styles.activeFilter : ''}/>
+            {/*<Button name={'all'} onClick={() => changeFilterHandler('all')}*/}
+            {/*        className={props.filter === 'all' ? styles.activeFilter : ''}*/}
+            {/*        variant={"contained"}*/}
+            {/*        disabled*/}
+            {/*> all </Button>*/}
+            <Button
+                size={"small"}
+                color={props.filter === "all" ? "secondary" : "primary"}
+                variant={"contained"}
+                disableElevation
+                onClick={() => changeFilterHandler("all")}>All
+            </Button>
+            <Button
+                size={"small"}
+                color={props.filter === 'completed' ? "secondary" : "primary"}
+                variant={"contained"}
+                disableElevation
+                onClick={() => changeFilterHandler("completed")}>Completed
+            </Button>
+            <Button
+                size={"small"}
+                color={props.filter === 'active' ? "secondary" : "primary"}
+                variant={'contained'}
+                disableElevation
+                onClick={() => changeFilterHandler("active")}>Active
+            </Button>
+
+            {/*<Button name={'active'} onClick={() => changeFilterHandler('active')}*/}
+            {/*        className={props.filter === 'active' ? styles.activeFilter : ''}>active </Button>*/}
+            {/*<Button name={'completed'} onClick={() => changeFilterHandler('completed')}*/}
+            {/*        className={props.filter === 'completed' ? styles.activeFilter : ''}>completed</Button>*/}
         </div>
     </div>
 }
