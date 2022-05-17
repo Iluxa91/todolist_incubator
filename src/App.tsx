@@ -29,8 +29,7 @@ function App() {
     const [todoLists, setTodoList] = useState<Array<TodolistType>>([
             {id: todoListId_1, title: "What to learn", filter: "all"},
             {id: todoListId_2, title: "What to buy", filter: "all"},
-        ]
-    )
+        ])
     const [tasks, setTasks] = useState<TaskStateType>({
         [todoListId_1]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
@@ -46,17 +45,15 @@ function App() {
             {id: v1(), title: "Paper", isDone: false},
         ]
     });
-
+    let [filter, setFilter] = useState<FilterValuesType>("all");
 
     function removeTask(id: string, todoListId: string) {
         setTasks({...tasks, [todoListId]: tasks[todoListId].filter(t => t.id != id)});
     }
-
     function addTask(title: string, todoListId: string) {
         let newTask: TaskType = {id: v1(), title: title, isDone: false};
         setTasks({...tasks, [todoListId]: [newTask, ...tasks[todoListId]]});
     }
-
     const CheckBoxChange = (currentID: string, isDone: boolean, toDoListId: string) => {
         setTasks({
             ...tasks,
@@ -69,7 +66,6 @@ function App() {
             [toDoListId]: tasks[toDoListId].map(t => t.id === currentID ? {...t, title} : t)
         })
     }
-
     const removeTodoList = (todoListId: string) => {
         setTodoList(todoLists.filter(tl => tl.id !== todoListId))
         delete tasks[todoListId]
@@ -85,12 +81,9 @@ function App() {
         setTasks({...tasks, [newTodoListID]: []})
     }
 
-    let [filter, setFilter] = useState<FilterValuesType>("all");
-
     function changeTodoListFilter(filter: FilterValuesType, todoListId: string) {
         setTodoList(todoLists.map(tl => tl.id === todoListId ? {...tl, filter} : tl))
     }
-
     function changeTodoListTitle(title: string, todoListId: string) {
         setTodoList(todoLists.map(tl => tl.id === todoListId ? {...tl, title: title} : tl))
     }
