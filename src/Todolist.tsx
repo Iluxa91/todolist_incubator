@@ -1,8 +1,8 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useContext, useState} from 'react';
 import {FilterValuesType} from './App';
 import styles from './Todolist.module.css'
 
-// import {CheckBox} from "./components/CheckBox";
+import {CheckBox} from "./components/CheckBox";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton, List} from "@material-ui/core";
@@ -28,11 +28,11 @@ type PropsType = {
     changeTaskTitle: (currentID: string, title: string, toDoListId: string) => void
 }
 
-export function Todolist(props: PropsType) {
+export const Todolist = React.memo((props: PropsType) => {
 
-    const addTask = (title: string) => {
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.toDoListId)
-    }
+    },[props])
     const changeFilterHandler = (filterValue: FilterValuesType) => {
         props.changeTodoListFilter(filterValue, props.toDoListId)
     }
@@ -111,4 +111,4 @@ export function Todolist(props: PropsType) {
             {/*        className={props.filter === 'completed' ? styles.activeFilter : ''}>completed</Button>*/}
         </div>
     </div>
-}
+})
