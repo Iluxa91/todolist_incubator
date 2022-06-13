@@ -18,9 +18,9 @@ type TaskPropsType = {
 export const Task = React.memo((props:TaskPropsType) => {
     console.log('task called')
     const dispatch = useDispatch()
-    const CheckBoxHandler = (checkedValue: boolean) => {
+    const CheckBoxHandler = useCallback((checkedValue: boolean) => {
         dispatch(changeTaskStatusAC(props.taskId, checkedValue, props.todolistId))
-    }
+    },[dispatch, props.taskId, props.todolistId])
     const changeTaskTitle = useCallback((title: string) => {
         dispatch(changeTaskTitleAC(props.taskId, title, props.todolistId))
     }, [dispatch, props.taskId, props.todolistId])
