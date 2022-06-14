@@ -1,14 +1,13 @@
-import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
 import {FilterValuesType} from './App';
-import styles from './Todolist.module.css'
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, Checkbox, IconButton, List} from "@material-ui/core";
-import {DeleteOutline, HighlightOff} from "@material-ui/icons";
+import {Button, IconButton, List} from "@material-ui/core";
+import {DeleteOutline} from "@material-ui/icons";
 import {TodolistType} from "./AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./reducers/store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
+import {addTaskAC, removeTaskAC} from "./reducers/tasks-reducer";
 import {ChangeTodoListFilterAC, ChangeTodoListTitleAC, removeTodoListAC} from "./reducers/todolist-reducer";
 import {Task} from "./Task";
 
@@ -46,10 +45,10 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
     const dispatch = useDispatch()
     const addTask = useCallback((title: string) => {
         dispatch(addTaskAC(title, todolist.id))
-    },[dispatch, todolist.id])
+    }, [dispatch, todolist.id])
     const changeFilterHandler = useCallback((filterValue: FilterValuesType) => {
         dispatch(ChangeTodoListFilterAC(filterValue, todolist.id))
-    },[dispatch, todolist.id])
+    }, [dispatch, todolist.id])
     const changeTodoListTitle = useCallback((title: string) => {
         dispatch(ChangeTodoListTitleAC(title, todolist.id))
     }, [dispatch, todolist.id])
@@ -68,14 +67,11 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
         <List>
             {
                 tasks.map(t => <Task
-                    onClickHandler={onClickHandler}
-                    task={t}
-                    todolistId={todolist.id}
-                    taskId={t.id}
-                    isDone={t.isDone}
-                    taskTitle={t.title}
-                    key={t.id}
-                />
+                        onClickHandler={onClickHandler}
+                        task={t}
+                        todolistId={todolist.id}
+                        key={t.id}
+                    />
                     // const CheckBoxHandler = (checkedValue: boolean) => {
                     //     dispatch(changeTaskStatusAC(t.id, checkedValue, todolist.id))
                     // }

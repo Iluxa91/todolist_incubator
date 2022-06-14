@@ -7,33 +7,31 @@ import {HighlightOff} from "@material-ui/icons";
 import {TaskType} from "./TodolistWithTasks";
 
 type TaskPropsType = {
-    onClickHandler:(id:string)=>void
-    todolistId:string
-    task:TaskType
-    taskId:string
-    isDone:boolean
-    taskTitle:string
+    onClickHandler: (id: string) => void
+    todolistId: string
+    task: TaskType
+
 }
 
-export const Task = React.memo((props:TaskPropsType) => {
+export const Task = React.memo((props: TaskPropsType) => {
     console.log('task called')
     const dispatch = useDispatch()
     const CheckBoxHandler = useCallback((checkedValue: boolean) => {
-        dispatch(changeTaskStatusAC(props.taskId, checkedValue, props.todolistId))
-    },[dispatch, props.taskId, props.todolistId])
+        dispatch(changeTaskStatusAC(props.task.id, checkedValue, props.todolistId))
+    }, [dispatch, props.task.id, props.todolistId])
     const changeTaskTitle = useCallback((title: string) => {
-        dispatch(changeTaskTitleAC(props.taskId, title, props.todolistId))
-    }, [dispatch, props.taskId, props.todolistId])
-    return <li key={props.taskId}>
+        dispatch(changeTaskTitleAC(props.task.id, title, props.todolistId))
+    }, [dispatch, props.task.id, props.todolistId])
+    return <li key={props.task.id}>
         <Checkbox
-            checked={props.isDone}
-            onChange={() => CheckBoxHandler(!props.isDone)}
+            checked={props.task.isDone}
+            onChange={() => CheckBoxHandler(!props.task.isDone)}
             color={'primary'}
         />
-        <EditableSpan title={props.taskTitle} setNewTitle={changeTaskTitle}/>
+        <EditableSpan title={props.task.title} setNewTitle={changeTaskTitle}/>
         {/*<span>{t.title}</span>*/}
         <IconButton
             size={'small'}
-            onClick={() => props.onClickHandler(props.taskId)}><HighlightOff/></IconButton>
+            onClick={() => props.onClickHandler(props.task.id)}><HighlightOff/></IconButton>
     </li>
 })
