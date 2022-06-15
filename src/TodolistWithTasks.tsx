@@ -52,7 +52,7 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
     const changeTodoListTitle = useCallback((title: string) => {
         dispatch(ChangeTodoListTitleAC(title, todolist.id))
     }, [dispatch, todolist.id])
-    const onClickHandler = useCallback((tID: string) => dispatch(removeTaskAC(tID, todolist.id)), [dispatch, todolist.id])
+    // const onClickHandler = useCallback((tID: string) => dispatch(removeTaskAC(tID, todolist.id)), [dispatch, todolist.id])
     const removeTodoList = useCallback(() => {
         dispatch(removeTodoListAC(todolist.id))
     }, [dispatch, todolist.id])
@@ -67,7 +67,7 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
         <List>
             {
                 tasks.map(t => <Task
-                        onClickHandler={onClickHandler}
+                        // onClickHandler={onClickHandler}
                         task={t}
                         todolistId={todolist.id}
                         key={t.id}

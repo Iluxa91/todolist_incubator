@@ -1,4 +1,4 @@
-import {changeTaskStatusAC, changeTaskTitleAC} from "./reducers/tasks-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./reducers/tasks-reducer";
 import React, {useCallback} from "react";
 import {useDispatch} from "react-redux";
 import {EditableSpan} from "./EditableSpan";
@@ -7,7 +7,7 @@ import {HighlightOff} from "@material-ui/icons";
 import {TaskType} from "./TodolistWithTasks";
 
 type TaskPropsType = {
-    onClickHandler: (id: string) => void
+    // onClickHandler: (id: string) => void
     todolistId: string
     task: TaskType
 
@@ -16,6 +16,7 @@ type TaskPropsType = {
 export const Task = React.memo((props: TaskPropsType) => {
     console.log('task called')
     const dispatch = useDispatch()
+    const onClickHandler = useCallback((tID: string) => dispatch(removeTaskAC(tID, props.todolistId)), [dispatch, props.todolistId])
     const CheckBoxHandler = useCallback((checkedValue: boolean) => {
         dispatch(changeTaskStatusAC(props.task.id, checkedValue, props.todolistId))
     }, [dispatch, props.task.id, props.todolistId])
@@ -32,6 +33,8 @@ export const Task = React.memo((props: TaskPropsType) => {
         {/*<span>{t.title}</span>*/}
         <IconButton
             size={'small'}
-            onClick={() => props.onClickHandler(props.task.id)}><HighlightOff/></IconButton>
+            // onClick={() => props.onClickHandler(props.task.id)}
+            onClick={()=>onClickHandler(props.task.id)}>
+            <HighlightOff/></IconButton>
     </li>
 })
