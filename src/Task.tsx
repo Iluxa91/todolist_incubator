@@ -10,7 +10,6 @@ type TaskPropsType = {
     // onClickHandler: (id: string) => void
     todolistId: string
     task: TaskType
-
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
