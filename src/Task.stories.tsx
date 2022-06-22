@@ -2,6 +2,9 @@ import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 import {Task} from "./Task";
 import {ReduxStoreProviderDecorator} from "./stories/decorators/ReduxStoreProviderDecorator";
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "./reducers/store";
+import {TaskType} from "./TodolistWithTasks";
 
 export default {
     title: 'Todolist/Task',
@@ -9,37 +12,18 @@ export default {
     decorators: [ReduxStoreProviderDecorator]
 } as ComponentMeta<typeof Task>;
 
-// const TaskWithDispatch = () => {
-//     const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0])
-//     return <Task
-//         task={task}
-//         todolistId={"todolistId1"}
-//     />
-// }
-
-const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
-
-export const TaskIsDoneExample = Template.bind({});
-TaskIsDoneExample.args = {
-    task: {id: '1', isDone: true, title: 'js'},
-    todolistId: 'todolistId1'
-}
-export const TaskIsNotDoneExample = Template.bind({});
-TaskIsNotDoneExample.args = {
-    task: {id: '1', isDone: false, title: 'js'},
-    todolistId: 'todolistId1'
+const TaskWithDispatch = () => {
+    const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0])
+    return <Task
+        task={task}
+        todolistId={"todolistId1"}
+    />
 }
 
-// export const TaskIsDoneStories = Template.bind({});
-// TaskIsDoneStories.args = {
-//     // CheckBoxHandler: action('task status is changed'),
-//     todolistId: 'todolistId1',
-//     task: {id: '1', isDone: true, title: 'js'}
-// }
-//
-// export const TaskIsNotDoneStories = Template.bind({});
-// TaskIsNotDoneStories.args = {
-//     // CheckBoxHandler: action('task status is changed'),
-//     todolistId: 'todolistId1',
-//     task: {id: '2', isDone: false, title: 'js'}
-// }
+const Template: ComponentStory<typeof TaskWithDispatch> = () => <TaskWithDispatch />;
+
+export const TaskExample = Template.bind({});
+TaskExample.args = {
+    // task: {id: '1', isDone: true, title: 'js'},
+    // todolistId: 'todolistId1'
+}

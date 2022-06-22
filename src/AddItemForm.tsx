@@ -45,7 +45,9 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             error={!!error}
             helperText={error&&"Title is required"}
             />
-            <IconButton onClick={addItem}><AddCircleOutline/></IconButton>
+            <IconButton onClick={addItem}>
+                <AddCircleOutline/>
+            </IconButton>
             {/*{error && <div className={styles.errorMessage}>Title is required</div>}*/}
         </div>
     );
