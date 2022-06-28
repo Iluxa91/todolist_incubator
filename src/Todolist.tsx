@@ -1,8 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useCallback, useContext, useState} from 'react';
 import {FilterValuesType} from './App';
-import styles from './Todolist.module.css'
-
-import {CheckBox} from "./components/CheckBox";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, Checkbox, IconButton, List} from "@material-ui/core";
