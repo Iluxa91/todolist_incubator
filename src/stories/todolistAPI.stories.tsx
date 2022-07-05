@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import React from "react";
 import {todolistAPI} from "../API/todolistAPI";
 
-
 export default {
     title: 'API'
 }
@@ -195,8 +194,6 @@ export const UpdateTask = () => {
         <input placeholder={'status'} value={status} onChange={(e) => {setStatus(+e.currentTarget.value)}}/>
         <input placeholder={'priority'} value={priority} onChange={(e) => {setPriority(+e.currentTarget.value)}}/>
         <button onClick={updateTask}>update task</button>
-
-
     </div>
     </div>
 }

@@ -1,25 +1,26 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from "@material-ui/icons";
-import {AddTodoListAC, TodolistDomainType} from "./reducers/todolist-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./reducers/store";
+import {
+    addTodolistTC,
+    fetchTodolistsTC,
+} from "./Store/todolist-reducer";
 import {TodolistWithTasks} from "./TodolistWithTasks";
 import {TaskType} from "./API/todolistAPI";
+import {useAppDispatch, useAppSelector} from "./Store/hooks";
 
 export type TaskStateType = {
     [todoListId: string]: Array<TaskType>
 }
 
 function AppWithRedux() {
-
-    let todoLists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
-    let dispatch = useDispatch()
+    let todoLists = useAppSelector(state => state.todolists)
+    let dispatch = useAppDispatch()
 
     const addTodoList = useCallback((title: string) => {
-        dispatch(AddTodoListAC(title))
+        dispatch(addTodolistTC(title))
     }, [dispatch])
 
     const toDoListForRender = todoLists.map(tl => {
@@ -30,6 +31,10 @@ function AppWithRedux() {
             </Paper>
         </Grid>
     })
+
+    useEffect(() => {
+        dispatch(fetchTodolistsTC())
+    },[])
 
     return (
         <div className="App">

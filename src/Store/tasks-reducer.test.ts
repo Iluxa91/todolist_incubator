@@ -66,7 +66,7 @@ test('correct task should be added to correct array', () => {
     //     ]
     // };
 
-    const action = addTaskAC("juce", "todolistId2");
+    const action = addTaskAC({ id: "4", title: "juce", status: TaskStatuses.New, todoListId:"todolistId2", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low });
 
     const endState = tasksReducer(startState, action)
 
@@ -137,7 +137,7 @@ test('new array should be added when new todolist is added', () => {
     //     ]
     // };
 
-    const action = AddTodoListAC("new todolist");
+    const action = AddTodoListAC({id: "todolistId1", title: 'What to learn', order:0, addedDate:''});
     const endState = tasksReducer(startState, action)
 
     const keys = Object.keys(endState);
@@ -153,7 +153,7 @@ test('ids should be equals', () => {
     const startTasksState: TaskStateType = {};
     const startTodolistsState: Array<TodolistDomainType> = [];
 
-    const action = AddTodoListAC("new todolist");
+    const action = AddTodoListAC({id: "todolistId1", title: 'What to learn', order:0, addedDate:''});
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todoListsReducer(startTodolistsState, action)
@@ -162,8 +162,8 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0];
     const idFromTodolists = endTodolistsState[0].id;
 
-    expect(idFromTasks).toBe(action.todolistId);
-    expect(idFromTodolists).toBe(action.todolistId);
+    expect(idFromTasks).toBe(action.todolist.id);
+    expect(idFromTodolists).toBe(action.todolist.id);
 });
 
 test('property with todolistId should be deleted', () => {

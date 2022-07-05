@@ -1,7 +1,6 @@
 import {TaskStateType} from "../AppWithRedux";
 import {v1} from "uuid";
 import {
-    ActionType,
     AddTodoListAC,
     ChangeTodoListFilterAC, ChangeTodoListTitleAC, FilterValuesType,
     removeTodoListAC, TodolistDomainType,
@@ -45,10 +44,10 @@ test('correct todolist should be added', () => {
     //     {id: todolistId1, title: "What to learn", filter: "all"},
     //     {id: todolistId2, title: "What to buy", filter: "all"}
     // ]
-    const endState = todoListsReducer(startState, AddTodoListAC(newTodolistTitle))
+    const endState = todoListsReducer(startState, AddTodoListAC({id: todolistId1, title: newTodolistTitle, order:0, addedDate:''}))
 
     expect(endState.length).toBe(3);
-    expect(endState[2].title).toBe(newTodolistTitle);
+    expect(endState[0].title).toBe(newTodolistTitle);
 });
 test('correct todolist should change its name', () => {
     // let todolistId1 = v1()
@@ -89,7 +88,7 @@ test('ids should be equals', () => {
     const startTasksState: TaskStateType = {};
     const startTodolistsState: Array<TodolistDomainType> = [];
 
-    const action = AddTodoListAC("new todolist");
+    const action = AddTodoListAC({id: todolistId1, title: 'What to learn', order:0, addedDate:''});
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todoListsReducer(startTodolistsState, action)
@@ -98,6 +97,6 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0];
     const idFromTodolists = endTodolistsState[0].id;
 
-    expect(idFromTasks).toBe(action.todolistId);
-    expect(idFromTodolists).toBe(action.todolistId);
+    expect(idFromTasks).toBe(action.todolist.id);
+    expect(idFromTodolists).toBe(action.todolist.id);
 });

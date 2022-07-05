@@ -1,19 +1,18 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Button, IconButton, List} from "@material-ui/core";
 import {DeleteOutline} from "@material-ui/icons";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./reducers/store";
-import {addTaskAC} from "./reducers/tasks-reducer";
+import {addTaskAC, addTaskTC, fetchTasksTC} from "./Store/tasks-reducer";
 import {
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
+    ChangeTodoListTitleAC, changeTodolistTitleTC,
     FilterValuesType,
-    removeTodoListAC, TodolistDomainType
-} from "./reducers/todolist-reducer";
+    removeTodoListAC, removeTodolistTC, TodolistDomainType
+} from "./Store/todolist-reducer";
 import {Task} from "./Task";
-import {TaskStatuses, TaskType} from "./API/todolistAPI";
+import {TaskStatuses} from "./API/todolistAPI";
+import {useAppDispatch, useAppSelector} from "./Store/hooks";
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -21,7 +20,9 @@ type PropsType = {
 
 export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
     console.log('todolist called')
-    let tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todolist.id])
+    let tasks = useAppSelector(state => state.tasks[todolist.id])
+    const dispatch = useAppDispatch()
+
 
     if (todolist.filter === 'active') {
         tasks = tasks.filter(t => t.status === TaskStatuses.New)
@@ -29,20 +30,27 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
     if (todolist.filter === 'completed') {
         tasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
-    const dispatch = useDispatch()
+
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskAC(title, todolist.id))
+        dispatch(addTaskTC(todolist.id, title))
     }, [dispatch, todolist.id])
+
     const changeFilterHandler = useCallback((filterValue: FilterValuesType) => {
         dispatch(ChangeTodoListFilterAC(filterValue, todolist.id))
     }, [dispatch, todolist.id])
+
     const changeTodoListTitle = useCallback((title: string) => {
-        dispatch(ChangeTodoListTitleAC(title, todolist.id))
+        dispatch(changeTodolistTitleTC(todolist.id, title))
     }, [dispatch, todolist.id])
     // const onClickHandler = useCallback((tID: string) => dispatch(removeTaskAC(tID, todolist.id)), [dispatch, todolist.id])
+
     const removeTodoList = useCallback(() => {
-        dispatch(removeTodoListAC(todolist.id))
+        dispatch(removeTodolistTC(todolist.id))
     }, [dispatch, todolist.id])
+
+    useEffect(()=>{
+        dispatch(fetchTasksTC(todolist.id))
+    },[])
 
     return <div>
         <h3>
