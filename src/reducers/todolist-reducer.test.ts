@@ -1,22 +1,22 @@
-import {FilterValuesType, TaskStateType, TodolistType} from "../App";
+import {TaskStateType} from "../AppWithRedux";
 import {v1} from "uuid";
 import {
     ActionType,
     AddTodoListAC,
-    ChangeTodoListFilterAC, ChangeTodoListTitleAC,
-    removeTodoListAC,
+    ChangeTodoListFilterAC, ChangeTodoListTitleAC, FilterValuesType,
+    removeTodoListAC, TodolistDomainType,
     todoListsReducer
 } from "./todolist-reducer";
 import {tasksReducer} from "./tasks-reducer";
 
 let todolistId1 = v1()
 let todolistId2 = v1()
-let startState: Array<TodolistType>
+let startState: Array<TodolistDomainType>
 
 beforeEach(()=>{
     startState = [
-    {id: todolistId1, title: 'What to learn', filter: 'all'},
-    {id: todolistId2, title: 'What to buy', filter: 'all'}
+    {id: todolistId1, title: 'What to learn', filter: 'all', order:0, addedDate:''},
+    {id: todolistId2, title: 'What to buy', filter: "all", order:0, addedDate:''}
 ]
 })
 
@@ -87,7 +87,7 @@ test('correct filter of todolist should be changed', () => {
 
 test('ids should be equals', () => {
     const startTasksState: TaskStateType = {};
-    const startTodolistsState: Array<TodolistType> = [];
+    const startTodolistsState: Array<TodolistDomainType> = [];
 
     const action = AddTodoListAC("new todolist");
 
