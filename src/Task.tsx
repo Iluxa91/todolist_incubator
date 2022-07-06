@@ -1,13 +1,8 @@
 import {
-    changeTaskStatusAC,
-    changeTaskTitleAC,
-    fetchTasksTC,
-    removeTaskAC,
     removeTaskTC,
-    updateTaskStatusTC, updateTaskTitleTC
+    updateTaskTC
 } from "./Store/tasks-reducer";
-import React, {useCallback, useEffect} from "react";
-import {useDispatch} from "react-redux";
+import React, {useCallback} from "react";
 import {EditableSpan} from "./EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {HighlightOff} from "@material-ui/icons";
@@ -27,11 +22,11 @@ export const Task = React.memo((props: TaskPropsType) => {
     const onClickHandler = useCallback((tID: string) => dispatch(removeTaskTC(props.todolistId,tID)), [dispatch, props.todolistId])
 
     const CheckBoxHandler = useCallback((status: TaskStatuses) => {
-        dispatch(updateTaskStatusTC(props.task.id, props.todolistId, status))
+        dispatch(updateTaskTC(props.task.id, props.todolistId, {status}))
     }, [dispatch, props.task.id, props.todolistId])
 
     const changeTaskTitle = useCallback((title: string) => {
-        dispatch(updateTaskTitleTC(props.task.id, props.todolistId, title))
+        dispatch(updateTaskTC(props.task.id, props.todolistId, {title}))
     }, [dispatch, props.task.id, props.todolistId])
 
     return <li key={props.task.id}>

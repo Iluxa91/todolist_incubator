@@ -1,7 +1,5 @@
-import {v1} from "uuid";
 import {todolistAPI, TodolistType} from "../API/todolistAPI";
-import {Dispatch} from "redux";
-import {AppActionsType, AppRootStateType, AppThunk} from "./store";
+import {AppThunk} from "./store";
 
 export type TodolistsActionType =
     RemoveTodoListAT
@@ -93,10 +91,9 @@ export const addTodolistTC = (title:string):AppThunk => (dispatch) => {
 }
 
 export const changeTodolistTitleTC = (todolistId:string,title:string):AppThunk => (dispatch) => {
-
         todolistAPI.updateTodolist(todolistId,title)
             .then(res => {
-                dispatch(ChangeTodoListTitleAC(todolistId,title))
+                dispatch(ChangeTodoListTitleAC(title, todolistId))
             })
 }
 
