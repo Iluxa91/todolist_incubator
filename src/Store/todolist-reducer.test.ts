@@ -1,8 +1,8 @@
-import {TaskStateType} from "../AppWithRedux";
+import {TaskStateType} from "../App/AppWithRedux";
 import {v1} from "uuid";
 import {
-    AddTodoListAC,
-    ChangeTodoListFilterAC, ChangeTodoListTitleAC, FilterValuesType,
+    addTodoListAC,
+    changeTodoListFilterAC, changeTodoListTitleAC, FilterValuesType,
     removeTodoListAC, TodolistDomainType,
     todoListsReducer
 } from "./todolist-reducer";
@@ -44,7 +44,7 @@ test('correct todolist should be added', () => {
     //     {id: todolistId1, title: "What to learn", filter: "all"},
     //     {id: todolistId2, title: "What to buy", filter: "all"}
     // ]
-    const endState = todoListsReducer(startState, AddTodoListAC({id: todolistId1, title: newTodolistTitle, order:0, addedDate:''}))
+    const endState = todoListsReducer(startState, addTodoListAC({id: todolistId1, title: newTodolistTitle, order:0, addedDate:''}))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodolistTitle);
@@ -60,7 +60,7 @@ test('correct todolist should change its name', () => {
     //     type: 'CHANGE-TODOLIST-TITLE',
     //     id: todolistId2,
     //     title: newTodolistTitle}
-    const endState = todoListsReducer(startState, ChangeTodoListTitleAC(newTodolistTitle,todolistId2))
+    const endState = todoListsReducer(startState, changeTodoListTitleAC(newTodolistTitle,todolistId2))
 
     expect(endState[0].title).toBe('What to learn')
     expect(endState[1].title).toBe(newTodolistTitle)
@@ -79,7 +79,7 @@ test('correct filter of todolist should be changed', () => {
     //     id: todolistId2,
     //     filter: newFilter
     // }
-    const endState = todoListsReducer(startState, ChangeTodoListFilterAC(newFilter,todolistId2))
+    const endState = todoListsReducer(startState, changeTodoListFilterAC(newFilter,todolistId2))
     expect(endState[0].filter).toBe('all')
     expect(endState[1].filter).toBe(newFilter)
 })
@@ -88,7 +88,7 @@ test('ids should be equals', () => {
     const startTasksState: TaskStateType = {};
     const startTodolistsState: Array<TodolistDomainType> = [];
 
-    const action = AddTodoListAC({id: todolistId1, title: 'What to learn', order:0, addedDate:''});
+    const action = addTodoListAC({id: todolistId1, title: 'What to learn', order:0, addedDate:''});
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todoListsReducer(startTodolistsState, action)

@@ -1,15 +1,15 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import {AddItemForm} from "./AddItemForm";
+import {AddItemForm} from "../components/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
 import {Menu} from "@material-ui/icons";
 import {
     addTodolistTC,
     fetchTodolistsTC,
-} from "./Store/todolist-reducer";
-import {TodolistWithTasks} from "./TodolistWithTasks";
-import {TaskType} from "./API/todolistAPI";
-import {useAppDispatch, useAppSelector} from "./Store/hooks";
+} from "../Store/todolist-reducer";
+import {TodolistWithTasks} from "../Todolists/TodolistWithTasks";
+import {TaskType} from "../API/todolistAPI";
+import {useAppDispatch, useAppSelector} from "../Store/hooks";
 
 export type TaskStateType = {
     [todoListId: string]: Array<TaskType>
