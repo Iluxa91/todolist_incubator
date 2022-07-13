@@ -3,6 +3,7 @@ import {AddTodolistAT, RemoveTodolistAT, SetTodolistsAT} from "./todolist-reduce
 import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from "../API/todolistAPI";
 import {Dispatch} from "redux";
 import {AppRootStateType, AppThunk} from "./store";
+import {setAppErrorAC, setAppStatusAC} from "./app-reducer";
 
 const initialState: TaskStateType = {}
 
@@ -48,24 +49,40 @@ export const setTasksAC = (tasks: TaskType[], todolistId: string) => ({type: 'SE
 
 //thunks
 export const fetchTasksTC = (todolistId: string): AppThunk => {
-    return (dispatch:Dispatch<TasksActionType>) => {
+    return (dispatch) => {
+        dispatch(setAppStatusAC('loading'))
         todolistAPI.getTasks(todolistId)
             .then((res) => {
                 const tasks = res.data.items
                 dispatch(setTasksAC(tasks, todolistId))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 }
 export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     await todolistAPI.deleteTask(todolistId, taskId)
     dispatch(removeTaskAC(taskId, todolistId))
+    dispatch(setAppStatusAC('loading'))
 }
 export const addTaskTC = (todolistId:string,title:string):AppThunk => async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     const res = await todolistAPI.createTask(todolistId, title)
-    dispatch(addTaskAC(res.data.data.item))
+    if(res.data.resultCode===0){
+        dispatch(addTaskAC(res.data.data.item))
+        dispatch(setAppStatusAC('succeeded'))
+    } else {
+        if (res.data.messages.length){
+            dispatch(setAppErrorAC(res.data.messages[0]))
+        } else {
+            dispatch(setAppErrorAC('Some error occured'))
+        }
+        dispatch(setAppStatusAC('failed'))
+    }
 }
 export const updateTaskTC = (taskId: string, todolistId: string, domainModel:UpdateDomainTaskModelType):AppThunk => {
-    return (dispatch: Dispatch<TasksActionType>, getState: () => AppRootStateType) => {
+    return (dispatch, getState: () => AppRootStateType) => {
+        dispatch(setAppStatusAC('loading'))
 // так как мы обязаны на сервер отправить все св-ва, которые сервер ожидает, а не только
 // те, которые мы хотим обновить, соответственно нам нужно в этом месте взять таску целиком
 // чтобы у неё отобрать остальные св-ва
@@ -88,6 +105,7 @@ export const updateTaskTC = (taskId: string, todolistId: string, domainModel:Upd
                 .then(() => {
                 const action = updateTaskAC(taskId, domainModel, todolistId)
                 dispatch(action)
+                    dispatch(setAppStatusAC('succeeded'))
             })
         }
     }

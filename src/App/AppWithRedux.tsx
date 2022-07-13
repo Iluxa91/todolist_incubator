@@ -1,7 +1,17 @@
 import React, {useCallback, useEffect} from 'react';
-import './App.css';
+import s from './App.module.css';
 import {AddItemForm} from "../components/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
+import {
+    AppBar,
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    LinearProgress,
+    Paper,
+    Toolbar,
+    Typography
+} from '@material-ui/core';
 import {Menu} from "@material-ui/icons";
 import {
     addTodolistTC,
@@ -10,6 +20,7 @@ import {
 import {TodolistWithTasks} from "../Todolists/TodolistWithTasks";
 import {TaskType} from "../API/todolistAPI";
 import {useAppDispatch, useAppSelector} from "../Store/hooks";
+import {ErrorSnackbar} from "../components/ErrorSnackbar";
 
 export type TaskStateType = {
     [todoListId: string]: Array<TaskType>
@@ -17,6 +28,7 @@ export type TaskStateType = {
 
 function AppWithRedux() {
     let todoLists = useAppSelector(state => state.todolists)
+    let status = useAppSelector(state=>state.app.status)
     let dispatch = useAppDispatch()
 
     const addTodoList = useCallback((title: string) => {
@@ -37,7 +49,8 @@ function AppWithRedux() {
     },[])
 
     return (
-        <div className="App">
+        <div className={s.appContainer}>
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar style={{justifyContent: "space-between"}}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -48,10 +61,11 @@ function AppWithRedux() {
                     </Typography>
                     <Button color="inherit" variant={"outlined"}>Logout</Button>
                 </Toolbar>
+                {status==='loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: "20px 0px"}}>
-                    <AddItemForm addItem={addTodoList}/>
+                    <AddItemForm addItem={addTodoList} />
                 </Grid>
                 <Grid container spacing={5}>
                     {toDoListForRender}

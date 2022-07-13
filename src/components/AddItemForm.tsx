@@ -4,6 +4,7 @@ import {AddCircleOutline} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
@@ -45,7 +46,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             error={!!error}
             helperText={error&&"Title is required"}
             />
-            <IconButton onClick={addItem}>
+            <IconButton onClick={addItem} disabled={props.disabled}>
                 <AddCircleOutline/>
             </IconButton>
             {/*{error && <div className={styles.errorMessage}>Title is required</div>}*/}
