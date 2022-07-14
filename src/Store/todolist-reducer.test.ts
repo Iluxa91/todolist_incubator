@@ -6,7 +6,7 @@ import {
     removeTodoListAC, TodolistDomainType,
     todoListsReducer
 } from "./todolist-reducer";
-import {tasksReducer} from "./tasks-reducer";
+import {TaskDomainStateType, tasksReducer} from "./tasks-reducer";
 
 let todolistId1 = v1()
 let todolistId2 = v1()
@@ -85,7 +85,7 @@ test('correct filter of todolist should be changed', () => {
 })
 
 test('ids should be equals', () => {
-    const startTasksState: TaskStateType = {};
+    const startTasksState: TaskDomainStateType = {};
     const startTodolistsState: Array<TodolistDomainType> = [];
 
     const action = addTodoListAC({id: todolistId1, title: 'What to learn', order:0, addedDate:''});

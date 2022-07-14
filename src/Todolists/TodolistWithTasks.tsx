@@ -55,7 +55,11 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
 
     return <div>
         <h3>
-            <EditableSpan title={todolist.title} setNewTitle={changeTodoListTitle}/>
+            <EditableSpan
+                title={todolist.title}
+                setNewTitle={changeTodoListTitle}
+                disabled={todolist.entityStatus==='loading'}
+            />
             <IconButton onClick={removeTodoList} disabled={todolist.entityStatus==='loading'}>
                 <DeleteOutline/>
             </IconButton>
@@ -68,6 +72,7 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
                         task={t}
                         todolistId={todolist.id}
                         key={t.id}
+                        entityStatus={todolist.entityStatus}
                     />
                 )
             }

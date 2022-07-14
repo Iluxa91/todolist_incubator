@@ -5,6 +5,7 @@ import {ReduxStoreProviderDecorator} from "./decorators/ReduxStoreProviderDecora
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../Store/store";
 import {TaskType} from "../API/todolistAPI";
+import {RequestStatusType} from "../Store/app-reducer";
 
 export default {
     title: 'Todolist/Task',
@@ -13,8 +14,9 @@ export default {
 } as ComponentMeta<typeof Task>;
 
 const TaskWithDispatch = () => {
-    const task = useSelector<AppRootStateType, TaskType>(state => state.tasks['todolistId1'][0])
+    const task = useSelector<AppRootStateType, TaskType&{entityStatus: RequestStatusType}>(state => state.tasks['todolistId1'][0])
     return <Task
+        entityStatus={'idle'}
         task={task}
         todolistId={"todolistId1"}
     />

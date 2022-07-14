@@ -22,12 +22,12 @@ const initialGlobalState:AppRootStateType = {
     ],
     tasks: {
         "todolistId1": [
-            {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId:"todolistId1", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low},
-            {id: v1(), title: "JS", status: TaskStatuses.Completed,todoListId:"todolistId1", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low}
+            {id: v1(), title: "HTML&CSS", status: TaskStatuses.Completed, todoListId:"todolistId1", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low,entityStatus:'idle'},
+            {id: v1(), title: "JS", status: TaskStatuses.Completed,todoListId:"todolistId1", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low,entityStatus:'idle'}
         ],
         "todolistId2": [
-            {id: v1(), title: "Milk", status: TaskStatuses.Completed, todoListId:"todolistId2", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low},
-            {id: v1(), title: "React Book", status: TaskStatuses.Completed, todoListId:"todolistId2", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low}
+            {id: v1(), title: "Milk", status: TaskStatuses.Completed, todoListId:"todolistId2", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low, entityStatus:'idle'},
+            {id: v1(), title: "React Book", status: TaskStatuses.Completed, todoListId:"todolistId2", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low, entityStatus:'idle'}
         ]
     },
     app: {status:'loading',error:'some error'},

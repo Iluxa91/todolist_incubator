@@ -3,6 +3,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 type EditableSpanPropsType = {
     title: string
     setNewTitle: (newTitle: string) => void
+    disabled?: boolean
 }
 
 export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
@@ -23,7 +24,10 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
                    onBlur={offEditMode}
                    value={title}
                    onChange={onChangeHandler}
-                   onKeyPress={onKeyPressOffEditMode}/>
+                   onKeyPress={onKeyPressOffEditMode}
+                   disabled={props.disabled}
+
+            />
             : <span onDoubleClick={onEditMode}>{props.title}</span>
     );
 });
