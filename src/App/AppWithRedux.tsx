@@ -64,10 +64,10 @@ function AppWithRedux() {
                 {status==='loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <Grid container style={{padding: "20px 0px"}}>
+                <Grid container justify={'center'} style={{padding: "20px 0px"}}>
                     <AddItemForm addItem={addTodoList} />
                 </Grid>
-                <Grid container spacing={5}>
+                <Grid container justify={'center'} spacing={5}>
                     {toDoListForRender}
                 </Grid>
             </Container>
