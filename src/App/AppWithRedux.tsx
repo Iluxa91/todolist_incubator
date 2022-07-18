@@ -59,7 +59,7 @@ function AppWithRedux() {
                     <Typography variant="h6">
                         Todolists
                     </Typography>
-                    <Button color="inherit" variant={"outlined"}>Logout</Button>
+                    <Button color="inherit" variant={"outlined"}>Log out</Button>
                 </Toolbar>
                 {status==='loading' && <LinearProgress/>}
             </AppBar>
