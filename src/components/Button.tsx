@@ -1,6 +1,6 @@
 import React from 'react';
 import {inspect} from "util";
-import styles from '../Todolists/Todolist.module.css'
+import styles from '../features/todolistsList/Todolist.module.css'
 
 type ButtonPropsType = {
     name: string,

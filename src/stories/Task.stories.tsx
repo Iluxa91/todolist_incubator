@@ -1,11 +1,11 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import {Task} from "../Todolists/Task";
+import {Task} from "../features/todolistsList/Task";
 import {ReduxStoreProviderDecorator} from "./decorators/ReduxStoreProviderDecorator";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../Store/store";
+import {AppRootStateType} from "../store/store";
 import {TaskType} from "../API/todolistAPI";
-import {RequestStatusType} from "../Store/app-reducer";
+import {RequestStatusType} from "../store/app-reducer";
 
 export default {
     title: 'Todolist/Task',

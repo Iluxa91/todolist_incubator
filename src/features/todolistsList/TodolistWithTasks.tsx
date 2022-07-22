@@ -1,26 +1,27 @@
 import React, {useCallback, useEffect} from 'react';
-import {AddItemForm} from "../components/AddItemForm";
-import {EditableSpan} from "../components/EditableSpan";
+import {AddItemForm} from "../../components/AddItemForm";
+import {EditableSpan} from "../../components/EditableSpan";
 import {Button, IconButton, List} from "@material-ui/core";
 import {DeleteOutline} from "@material-ui/icons";
-import {addTaskTC, fetchTasksTC} from "../Store/tasks-reducer";
+import {addTaskTC, fetchTasksTC} from "../../store/tasks-reducer";
 import {
     changeTodoListFilterAC,
     changeTodolistTitleTC,
     FilterValuesType,
     removeTodolistTC,
     TodolistDomainType
-} from "../Store/todolist-reducer";
+} from "../../store/todolist-reducer";
 import {Task} from "./Task";
-import {TaskStatuses} from "../API/todolistAPI";
-import {useAppDispatch, useAppSelector} from "../Store/hooks";
+import {TaskStatuses} from "../../API/todolistAPI";
+import {useAppDispatch, useAppSelector} from "../../store/hooks";
 
 type PropsType = {
     todolist: TodolistDomainType
+    demo?: boolean
 }
 
-export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
-    console.log('todolist called')
+export const TodolistWithTasks = React.memo(({todolist, demo=false}: PropsType) => {
+    console.log('todolistsList called')
     let tasks = useAppSelector(state => state.tasks[todolist.id])
     const dispatch = useAppDispatch()
 
@@ -43,13 +44,16 @@ export const TodolistWithTasks = React.memo(({todolist}: PropsType) => {
     const changeTodoListTitle = useCallback((title: string) => {
         dispatch(changeTodolistTitleTC(todolist.id, title))
     }, [dispatch, todolist.id])
-    // const onClickHandler = useCallback((tID: string) => dispatch(removeTaskAC(tID, todolist.id)), [dispatch, todolist.id])
+    // const onClickHandler = useCallback((tID: string) => dispatch(removeTaskAC(tID, todolistsList.id)), [dispatch, todolistsList.id])
 
     const removeTodoList = useCallback(() => {
         dispatch(removeTodolistTC(todolist.id))
     }, [dispatch, todolist.id])
 
     useEffect(()=>{
+        if(demo){
+            return
+        }
         dispatch(fetchTasksTC(todolist.id))
     },[])
 

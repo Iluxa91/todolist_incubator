@@ -1,14 +1,13 @@
-import {
-    removeTaskTC,
-    updateTaskTC
-} from "../Store/tasks-reducer";
 import React, {useCallback} from "react";
-import {EditableSpan} from "../components/EditableSpan";
+import {EditableSpan} from "../../components/EditableSpan";
 import {Checkbox, IconButton} from "@material-ui/core";
 import {HighlightOff} from "@material-ui/icons";
-import {TaskStatuses, TaskType} from "../API/todolistAPI";
-import {useAppDispatch} from "../Store/hooks";
-import {RequestStatusType} from "../Store/app-reducer";
+import {TaskStatuses, TaskType} from "../../API/todolistAPI";
+import {useAppDispatch} from "../../store/hooks";
+import {RequestStatusType} from "../../store/app-reducer";
+import {removeTaskTC, updateTaskTC} from "../../store/tasks-reducer";
+
+
 
 type TaskPropsType = {
     // onClickHandler: (id: string) => void

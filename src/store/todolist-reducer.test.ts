@@ -1,4 +1,4 @@
-import {TaskStateType} from "../App/AppWithRedux";
+import {TaskStateType} from "../app/AppWithRedux";
 import {v1} from "uuid";
 import {
     addTodoListAC,
@@ -19,7 +19,7 @@ beforeEach(()=>{
 ]
 })
 
-test('correct todolist should be removed', () => {
+test('correct todolistsList should be removed', () => {
     // let todolistId1 = v1()
     // let todolistId2 = v1()
     //
@@ -34,7 +34,7 @@ test('correct todolist should be removed', () => {
     expect(endState[0].id).toBe(todolistId2)
 })
 
-test('correct todolist should be added', () => {
+test('correct todolistsList should be added', () => {
     // let todolistId1 = v1();
     // let todolistId2 = v1();
 
@@ -49,7 +49,7 @@ test('correct todolist should be added', () => {
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodolistTitle);
 });
-test('correct todolist should change its name', () => {
+test('correct todolistsList should change its name', () => {
     // let todolistId1 = v1()
     // let todolistId2 = v1()
     let newTodolistTitle = 'New Todolist'
@@ -66,7 +66,7 @@ test('correct todolist should change its name', () => {
     expect(endState[1].title).toBe(newTodolistTitle)
 })
 
-test('correct filter of todolist should be changed', () => {
+test('correct filter of todolistsList should be changed', () => {
     // let todolistId1 = v1()
     // let todolistId2 = v1()
     let newFilter: FilterValuesType = 'completed'

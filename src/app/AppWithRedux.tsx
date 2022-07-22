@@ -13,40 +13,35 @@ import {
     Typography
 } from '@material-ui/core';
 import {Menu} from "@material-ui/icons";
-import {
-    addTodolistTC,
-    fetchTodolistsTC,
-} from "../Store/todolist-reducer";
-import {TodolistWithTasks} from "../Todolists/TodolistWithTasks";
+import {addTodolistTC, fetchTodolistsTC,} from "../store/todolist-reducer";
+import {TodolistWithTasks} from "../features/todolistsList/TodolistWithTasks";
 import {TaskType} from "../API/todolistAPI";
-import {useAppDispatch, useAppSelector} from "../Store/hooks";
+import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {ErrorSnackbar} from "../components/ErrorSnackbar";
+import {Navigate, Route, Routes} from 'react-router-dom';
+import {Login} from "../features/login/Login";
+import {TodolistsList} from "../features/todolistsList/TodolistsList";
+import {initializeAppTC} from "../store/app-reducer";
+
 
 export type TaskStateType = {
     [todoListId: string]: Array<TaskType>
 }
+type PropsType = {
+    demo?: boolean
+}
 
-function AppWithRedux() {
-    let todoLists = useAppSelector(state => state.todolists)
-    let status = useAppSelector(state=>state.app.status)
-    let dispatch = useAppDispatch()
-
-    const addTodoList = useCallback((title: string) => {
-        dispatch(addTodolistTC(title))
-    }, [dispatch])
-
-    const toDoListForRender = todoLists.map(tl => {
-
-        return <Grid item key={tl.id}>
-            <Paper style={{padding: "20px"}} elevation={10}>
-                <TodolistWithTasks todolist={tl}/>
-            </Paper>
-        </Grid>
-    })
+function AppWithRedux({demo = false}:PropsType) {
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const status = useAppSelector(state => state.app.status)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchTodolistsTC())
-    },[])
+        if (demo) {
+            return
+        }
+        dispatch(initializeAppTC())
+    }, [])
 
     return (
         <div className={s.appContainer}>
@@ -61,16 +56,18 @@ function AppWithRedux() {
                     </Typography>
                     <Button color="inherit" variant={"outlined"}>Log out</Button>
                 </Toolbar>
-                {status==='loading' && <LinearProgress/>}
+                {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <Grid container justify={'center'} style={{padding: "20px 0px"}}>
-                    <AddItemForm addItem={addTodoList} />
-                </Grid>
-                <Grid container justify={'center'} spacing={5}>
-                    {toDoListForRender}
-                </Grid>
+                <Routes>
+                    <Route path='/' element={<TodolistsList demo={demo}/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                    <Route path='*' element={<Navigate to='/404'/>}/>
+                    <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                </Routes>
             </Container>
+
+
         </div>
     );
 }

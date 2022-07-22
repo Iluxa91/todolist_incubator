@@ -1,6 +1,6 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
-import AppWithRedux from "../App/AppWithRedux";
+import AppWithRedux from "../app/AppWithRedux";
 import {ReduxStoreProviderDecorator} from "./decorators/ReduxStoreProviderDecorator";
 
 
@@ -15,6 +15,6 @@ export default {
 
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof AppWithRedux> = (args) => <AppWithRedux />;
+const Template: ComponentStory<typeof AppWithRedux > = (args) => <AppWithRedux demo= {true}/>;
 
 export const AppWithReduxExample = Template.bind({});

@@ -1,5 +1,5 @@
 import {ResponseType} from "../API/todolistAPI";
-import {AppReducerActionsType, setAppErrorAC, setAppStatusAC} from "../Store/app-reducer";
+import {AppReducerActionsType, setAppErrorAC, setAppStatusAC} from "../store/app-reducer";
 import {Dispatch} from "redux";
 
 // generic function
