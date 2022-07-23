@@ -1,5 +1,5 @@
 import {TaskStateType} from "../app/AppWithRedux";
-import {AddTodolistAT, RemoveTodolistAT, SetTodolistsAT} from "./todolist-reducer";
+import {AddTodolistAT, ClearTodosDataAT, RemoveTodolistAT, SetTodolistsAT} from "./todolist-reducer";
 import {TaskPriorities, TaskStatuses, TaskType, todolistAPI, UpdateTaskModelType} from "../API/todolistAPI";
 import {AppRootStateType, AppThunk} from "./store";
 import {RequestStatusType, setAppStatusAC} from "./app-reducer";
@@ -40,6 +40,8 @@ export const tasksReducer = (state = initialState, action: TasksActionType): Tas
             return {...state,
                 [action.todolistId]:state[action.todolistId].map(t=>t.id===action.taskId
                 ? {...t, entityStatus: action.status} : t)}
+        case 'CLEAR-DATA':
+            return {}
         default:
             return state
     }
@@ -157,6 +159,7 @@ export type TasksActionType =
     | AddTodolistAT
     | RemoveTodolistAT
     | SetTodolistsAT
+    | ClearTodosDataAT
     | ReturnType<typeof setTasksAC>
     | ReturnType<typeof changeTaskEntityStatusAC>
 export type TaskDomainStateType = {

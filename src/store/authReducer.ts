@@ -2,6 +2,7 @@ import {AppReducerActionsType, setAppStatusAC} from "./app-reducer";
 import {authAPI, LoginParamsType} from "../API/todolistAPI";
 import {AppThunk} from "./store";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {clearTodosDataAC} from "./todolist-reducer";
 
 
 const initialState = {
@@ -38,6 +39,22 @@ export const loginTC = (data: LoginParamsType): AppThunk => (dispatch) => {
                 handleServerNetworkError(err, dispatch)
             }
         )
+}
+export const logoutTC = ():AppThunk => (dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.logout()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
+                dispatch(clearTodosDataAC())
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
 }
 
 // types

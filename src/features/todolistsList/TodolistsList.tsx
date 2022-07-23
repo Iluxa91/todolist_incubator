@@ -16,7 +16,8 @@ export const TodolistsList = ({demo=false}:PropsType) => {
     const dispatch = useAppDispatch()
 
     useEffect(()=>{
-        if(demo){
+        debugger
+        if(demo || !isLoggedIn){
             return
         }
         dispatch(fetchTodolistsTC())
@@ -27,7 +28,6 @@ export const TodolistsList = ({demo=false}:PropsType) => {
     }, [dispatch])
 
     const toDoListForRender = todoLists.map(tl => {
-
         return <Grid item key={tl.id}>
             <Paper style={{padding: "20px"}} elevation={10}>
                 <TodolistWithTasks todolist={tl} demo={demo}/>

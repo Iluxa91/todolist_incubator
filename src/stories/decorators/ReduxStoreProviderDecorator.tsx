@@ -31,7 +31,7 @@ const initialGlobalState:AppRootStateType = {
             {id: v1(), title: "React Book", status: TaskStatuses.Completed, todoListId:"todolistId2", addedDate:'', deadline:'', description:'', order: 0, startDate:'', priority:TaskPriorities.Low, entityStatus:'idle'}
         ]
     },
-    app: {status:'loading',error:'some error'},
+    app: {status:'loading',error:'some error',isInizialized: true},
     auth: {isLoggedIn: false}
 
 };

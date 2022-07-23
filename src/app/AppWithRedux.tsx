@@ -22,6 +22,8 @@ import {Navigate, Route, Routes} from 'react-router-dom';
 import {Login} from "../features/login/Login";
 import {TodolistsList} from "../features/todolistsList/TodolistsList";
 import {initializeAppTC} from "../store/app-reducer";
+import {CircularProgress} from "@mui/material";
+import {logoutTC} from "../store/authReducer";
 
 
 export type TaskStateType = {
@@ -31,8 +33,10 @@ type PropsType = {
     demo?: boolean
 }
 
-function AppWithRedux({demo = false}:PropsType) {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+function AppWithRedux({demo = false}: PropsType) {
+
+    const isInitialized = useAppSelector(state => state.app.isInizialized)
+    const isLoggedIn = useAppSelector(state=>state.auth.isLoggedIn)
     const status = useAppSelector(state => state.app.status)
     const dispatch = useAppDispatch()
 
@@ -42,7 +46,12 @@ function AppWithRedux({demo = false}:PropsType) {
         }
         dispatch(initializeAppTC())
     }, [])
-
+    if (!isInitialized) {
+        return <div
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress/>
+        </div>
+    }
     return (
         <div className={s.appContainer}>
             <ErrorSnackbar/>
@@ -54,7 +63,7 @@ function AppWithRedux({demo = false}:PropsType) {
                     <Typography variant="h6">
                         Todolists
                     </Typography>
-                    <Button color="inherit" variant={"outlined"}>Log out</Button>
+                    {isLoggedIn && <Button color="inherit" variant={"outlined"} onClick={()=>dispatch(logoutTC())}>Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
