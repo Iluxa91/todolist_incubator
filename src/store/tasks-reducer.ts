@@ -60,12 +60,12 @@ export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, sta
 //thunks
 export const fetchTasksTC = (todolistId: string): AppThunk => {
     return (dispatch) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC({status: "loading"}))
         todolistAPI.getTasks(todolistId)
             .then((res) => {
                 const tasks = res.data.items
                 dispatch(setTasksAC(tasks, todolistId))
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC({status: "succeeded"}))
             })
             .catch((err) => {
                 handleServerNetworkError(err, dispatch)
@@ -73,24 +73,24 @@ export const fetchTasksTC = (todolistId: string): AppThunk => {
     }
 }
 export const removeTaskTC = (todolistId: string, taskId: string): AppThunk => dispatch => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: "loading"}))
     dispatch(changeTaskEntityStatusAC(todolistId,taskId,'loading'))
     todolistAPI.deleteTask(todolistId, taskId)
         .then(() => {
             dispatch(removeTaskAC(taskId, todolistId))
-            dispatch(setAppStatusAC('succeeded'))
+            dispatch(setAppStatusAC({status: "succeeded"}))
         })
         .catch((err) => {
             handleServerNetworkError(err, dispatch)
         })
 }
 export const addTaskTC = (todolistId: string, title: string): AppThunk => dispatch => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC({status: "loading"}))
     todolistAPI.createTask(todolistId, title)
         .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(addTaskAC(res.data.data.item))
-                    dispatch(setAppStatusAC('succeeded'))
+                    dispatch(setAppStatusAC({status: "succeeded"}))
                 } else {
                     handleServerAppError(res.data, dispatch)
                 }
@@ -105,7 +105,7 @@ export const addTaskTC = (todolistId: string, title: string): AppThunk => dispat
 }
 export const updateTaskTC = (taskId: string, todolistId: string, domainModel: UpdateDomainTaskModelType): AppThunk => {
     return (dispatch, getState: () => AppRootStateType) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC({status: "loading"}))
         dispatch(changeTaskEntityStatusAC(todolistId,taskId,'loading'))
 // так как мы обязаны на сервер отправить все св-ва, которые сервер ожидает, а не только
 // те, которые мы хотим обновить, соответственно нам нужно в этом месте взять таску целиком
@@ -130,7 +130,7 @@ export const updateTaskTC = (taskId: string, todolistId: string, domainModel: Up
                     if (res.data.resultCode === 0) {
                         const action = updateTaskAC(taskId, domainModel, todolistId)
                         dispatch(action)
-                        dispatch(setAppStatusAC('succeeded'))
+                        dispatch(setAppStatusAC({status: "succeeded"}))
                         dispatch(changeTaskEntityStatusAC(todolistId,taskId,'succeeded'))
                     } else {
                         handleServerAppError(res.data, dispatch)
