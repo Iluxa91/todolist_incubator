@@ -37,7 +37,7 @@ export const TodolistWithTasks = React.memo(({todolist, demo=false}: PropsType) 
     }, [dispatch, todolist.id])
 
     const changeFilterHandler = useCallback((filterValue: FilterValuesType) => {
-        dispatch(changeTodoListFilterAC(filterValue, todolist.id))
+        dispatch(changeTodoListFilterAC({filter: filterValue, id: todolist.id}))
     }, [dispatch, todolist.id])
 
     const changeTodoListTitle = useCallback((title: string) => {

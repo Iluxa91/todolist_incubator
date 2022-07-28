@@ -28,7 +28,7 @@ test('correct todolistsList should be removed', () => {
     //     {id: todolistId2, title: 'What to buy', filter: 'all'}
     // ]
 
-    const endState = todoListsReducer(startState, removeTodoListAC(todolistId1))
+    const endState = todoListsReducer(startState, removeTodoListAC({id: todolistId1}))
 
     expect(endState.length).toBe(1)
     expect(endState[0].id).toBe(todolistId2)
@@ -44,7 +44,7 @@ test('correct todolistsList should be added', () => {
     //     {id: todolistId1, title: "What to learn", filter: "all"},
     //     {id: todolistId2, title: "What to buy", filter: "all"}
     // ]
-    const endState = todoListsReducer(startState, addTodoListAC({id: todolistId1, title: newTodolistTitle, order:0, addedDate:''}))
+    const endState = todoListsReducer(startState, addTodoListAC({todolist: {id: todolistId1, title: newTodolistTitle, order:0, addedDate:''}}))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodolistTitle);
@@ -60,7 +60,9 @@ test('correct todolistsList should change its name', () => {
     //     type: 'CHANGE-TODOLIST-TITLE',
     //     id: todolistId2,
     //     title: newTodolistTitle}
-    const endState = todoListsReducer(startState, changeTodoListTitleAC(newTodolistTitle,todolistId2))
+    const endState = todoListsReducer(startState, changeTodoListTitleAC({title:
+        newTodolistTitle,id: todolistId2
+    }))
 
     expect(endState[0].title).toBe('What to learn')
     expect(endState[1].title).toBe(newTodolistTitle)
@@ -79,7 +81,10 @@ test('correct filter of todolistsList should be changed', () => {
     //     id: todolistId2,
     //     filter: newFilter
     // }
-    const endState = todoListsReducer(startState, changeTodoListFilterAC(newFilter,todolistId2))
+    const endState = todoListsReducer(startState, changeTodoListFilterAC({
+        filter: newFilter,
+        id: todolistId2
+    }))
     expect(endState[0].filter).toBe('all')
     expect(endState[1].filter).toBe(newFilter)
 })
@@ -88,7 +93,7 @@ test('ids should be equals', () => {
     const startTasksState: TaskDomainStateType = {};
     const startTodolistsState: Array<TodolistDomainType> = [];
 
-    const action = addTodoListAC({id: todolistId1, title: 'What to learn', order:0, addedDate:''});
+    const action = addTodoListAC({todolist: {id: todolistId1, title: 'What to learn', order:0, addedDate:''}});
 
     const endTasksState = tasksReducer(startTasksState, action)
     const endTodolistsState = todoListsReducer(startTodolistsState, action)
@@ -97,6 +102,6 @@ test('ids should be equals', () => {
     const idFromTasks = keys[0];
     const idFromTodolists = endTodolistsState[0].id;
 
-    expect(idFromTasks).toBe(action.todolist.id);
-    expect(idFromTodolists).toBe(action.todolist.id);
+    expect(idFromTasks).toBe(action.payload.todolist.id);
+    expect(idFromTodolists).toBe(action.payload.todolist.id);
 });
