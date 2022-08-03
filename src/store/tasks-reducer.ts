@@ -1,16 +1,14 @@
-import {TaskStateType} from "../app/AppWithRedux";
 import {
     addTodoListAC,
-    AddTodolistAT, clearTodosDataAC,
-    ClearTodosDataAT, removeTodoListAC,
-    RemoveTodolistAT, setTodolistsAC,
-    SetTodolistsAT
+    clearTodosDataAC,
+    removeTodoListAC,
+    setTodolistsAC
 } from "./todolist-reducer";
 import {
     TaskPriorities,
     TaskStatuses,
     TaskType,
-    todolistAPI, TodolistType,
+    todolistAPI,
     UpdateTaskModelType
 } from "../API/todolistAPI";
 import {AppRootStateType, AppThunk} from "./store";
@@ -183,17 +181,6 @@ type UpdateDomainTaskModelType = {
 }
 
 //types
-export type TasksActionType =
-    | ReturnType<typeof removeTaskAC>
-    | ReturnType<typeof addTaskAC>
-    | ReturnType<typeof updateTaskAC>
-    | AddTodolistAT
-    | RemoveTodolistAT
-    | SetTodolistsAT
-    | ClearTodosDataAT
-    | ReturnType<typeof setTasksAC>
-    | ReturnType<typeof changeTaskEntityStatusAC>
-
 export type TaskDomainStateType = {
     [todoListId: string]: Array<TaskType & { entityStatus: RequestStatusType }>
 }

@@ -1,9 +1,9 @@
-import {combineReducers} from "redux";
-import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk";
-import {appReducer, AppReducerActionsType} from "./app-reducer";
-import {TasksActionType, tasksReducer} from "./tasks-reducer";
-import {TodolistsActionType, todoListsReducer} from "./todolist-reducer";
-import {AuthActionsType, authReducer} from "./authReducer";
+import {AnyAction, combineReducers} from "redux";
+import {ThunkAction} from "redux-thunk";
+import {appReducer} from "./app-reducer";
+import {tasksReducer} from "./tasks-reducer";
+import {todoListsReducer} from "./todolist-reducer";
+import {authReducer} from "./authReducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -20,13 +20,11 @@ const rootReducer = combineReducers({
 // export const store = createStore(rootReducer,applyMiddleware(thunk));
 export const store = configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
 })
 // определить автоматически тип всего объекта состояния
-export type AppActionsType = TasksActionType | TodolistsActionType | AppReducerActionsType | AuthActionsType
-export type AppRootStateType = ReturnType<typeof rootReducer>
-export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
+export type AppRootStateType = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AnyAction>
 
 // а это, чтобы можно было в консоли браузера обращаться к store в любой момент
 // @ts-ignore

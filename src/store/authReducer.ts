@@ -1,4 +1,4 @@
-import {AppReducerActionsType, setAppStatusAC} from "./app-reducer";
+import {setAppStatusAC} from "./app-reducer";
 import {authAPI, LoginParamsType} from "../API/todolistAPI";
 import {AppThunk} from "./store";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
@@ -57,5 +57,3 @@ export const logoutTC = ():AppThunk => (dispatch) => {
             handleServerNetworkError(error, dispatch)
         })
 }
-
-export type AuthActionsType = ReturnType<typeof setIsLoggedInAC>

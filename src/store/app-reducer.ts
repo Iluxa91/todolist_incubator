@@ -12,7 +12,7 @@ const initialState = {
     isInizialized: false
 }
 
-// type InitialStateType = typeof initialState
+export type AppInitialStateType = typeof initialState
 
 const slice = createSlice({
     name: 'app',
@@ -46,15 +46,10 @@ export const {setAppStatusAC,setAppErrorAC,setisInizializedAC} = slice.actions
 //     }
 // }
 
-export type AppReducerActionsType =
-    ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof setAppErrorAC>
-    | ReturnType<typeof setisInizializedAC>
-
-
 // export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
 // export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
 // export const setisInizializedAC = (isInizialized: boolean) => ({type: 'APP/SET-IS-INIZIALIZED', isInizialized} as const)
+export type ErrorUtilsDispatchType = ReturnType<typeof setAppStatusAC> | ReturnType<typeof setAppErrorAC>
 
 export const initializeAppTC = (): AppThunk => (dispatch) => {
     authAPI.me()

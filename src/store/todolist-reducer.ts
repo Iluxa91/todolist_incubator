@@ -114,20 +114,7 @@ export const changeTodolistTitleTC = (todolistId: string, title: string): AppThu
 }
 
 //types
-export type TodolistsActionType =
-    | RemoveTodolistAT
-    | ReturnType<typeof setTodolistsAC>
-    | ReturnType<typeof changeTodoListFilterAC>
-    | ReturnType<typeof changeTodoListTitleAC>
-    | SetTodolistsAT
-    | AddTodolistAT
-    | ReturnType<typeof changeTodolistEntityStatusAC>
-    | ClearTodosDataAT
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistDomainType =
     TodolistType
     & { filter: FilterValuesType, entityStatus: RequestStatusType }
-export type SetTodolistsAT = ReturnType<typeof setTodolistsAC>
-export type RemoveTodolistAT = ReturnType<typeof removeTodoListAC>
-export type AddTodolistAT = ReturnType<typeof addTodoListAC>
-export type ClearTodosDataAT = ReturnType<typeof clearTodosDataAC>

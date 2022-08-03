@@ -1,24 +1,19 @@
-import React, {useCallback, useEffect} from 'react';
-import s from './App.module.css';
-import {AddItemForm} from "../components/AddItemForm";
+import React, {useEffect} from "react";
+import s from "./App.module.css";
 import {
     AppBar,
     Button,
     Container,
-    Grid,
     IconButton,
     LinearProgress,
-    Paper,
     Toolbar,
     Typography
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {addTodolistTC, fetchTodolistsTC,} from "../store/todolist-reducer";
-import {TodolistWithTasks} from "../features/todolistsList/TodolistWithTasks";
 import {TaskType} from "../API/todolistAPI";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {ErrorSnackbar} from "../components/ErrorSnackbar";
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from "react-router-dom";
 import {Login} from "../features/login/Login";
 import {TodolistsList} from "../features/todolistsList/TodolistsList";
 import {initializeAppTC} from "../store/app-reducer";
@@ -75,8 +70,6 @@ function AppWithRedux({demo = false}: PropsType) {
                     <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
                 </Routes>
             </Container>
-
-
         </div>
     );
 }

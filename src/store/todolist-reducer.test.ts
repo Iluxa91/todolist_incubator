@@ -1,12 +1,19 @@
-import {TaskStateType} from "../app/AppWithRedux";
 import {v1} from "uuid";
 import {
-    addTodoListAC,
-    changeTodoListFilterAC, changeTodoListTitleAC, FilterValuesType,
-    removeTodoListAC, TodolistDomainType,
+    addTodoListAC, changeTodolistEntityStatusAC,
+    changeTodoListFilterAC,
+    changeTodoListTitleAC,
+    FilterValuesType,
+    removeTodoListAC, setTodolistsAC,
+    TodolistDomainType,
     todoListsReducer
 } from "./todolist-reducer";
-import {TaskDomainStateType, tasksReducer} from "./tasks-reducer";
+import {
+    changeTaskEntityStatusAC,
+    TaskDomainStateType,
+    tasksReducer
+} from "./tasks-reducer";
+import {RequestStatusType} from "./app-reducer";
 
 let todolistId1 = v1()
 let todolistId2 = v1()
@@ -19,7 +26,7 @@ beforeEach(()=>{
 ]
 })
 
-test('correct todolistsList should be removed', () => {
+test('correct todolist should be removed', () => {
     // let todolistId1 = v1()
     // let todolistId2 = v1()
     //
@@ -34,32 +41,19 @@ test('correct todolistsList should be removed', () => {
     expect(endState[0].id).toBe(todolistId2)
 })
 
-test('correct todolistsList should be added', () => {
-    // let todolistId1 = v1();
-    // let todolistId2 = v1();
+test('correct todolist should be added', () => {
 
     let newTodolistTitle = "New Todolist";
 
-    // const startState: Array<TodolistType> = [
-    //     {id: todolistId1, title: "What to learn", filter: "all"},
-    //     {id: todolistId2, title: "What to buy", filter: "all"}
-    // ]
     const endState = todoListsReducer(startState, addTodoListAC({todolist: {id: todolistId1, title: newTodolistTitle, order:0, addedDate:''}}))
 
     expect(endState.length).toBe(3);
     expect(endState[0].title).toBe(newTodolistTitle);
 });
-test('correct todolistsList should change its name', () => {
-    // let todolistId1 = v1()
-    // let todolistId2 = v1()
+test('correct todolist should change its name', () => {
+
     let newTodolistTitle = 'New Todolist'
-    // const startState: Array<TodolistType> = [
-    //     {id: todolistId1, title: 'What to learn', filter: 'all'},
-    //     {id: todolistId2, title: 'What to buy', filter: 'all'}]
-    // const action: ActionType = {
-    //     type: 'CHANGE-TODOLIST-TITLE',
-    //     id: todolistId2,
-    //     title: newTodolistTitle}
+
     const endState = todoListsReducer(startState, changeTodoListTitleAC({title:
         newTodolistTitle,id: todolistId2
     }))
@@ -68,19 +62,10 @@ test('correct todolistsList should change its name', () => {
     expect(endState[1].title).toBe(newTodolistTitle)
 })
 
-test('correct filter of todolistsList should be changed', () => {
-    // let todolistId1 = v1()
-    // let todolistId2 = v1()
+test('correct filter of todolist should be changed', () => {
+
     let newFilter: FilterValuesType = 'completed'
-    // const startState: Array<TodolistType> = [
-    //     {id: todolistId1, title: 'What to learn', filter: 'all'},
-    //     {id: todolistId2, title: 'What to buy', filter: 'all'}
-    // ]
-    // const action: ActionType = {
-    //     type: 'CHANGE-TODOLIST-FILTER',
-    //     id: todolistId2,
-    //     filter: newFilter
-    // }
+
     const endState = todoListsReducer(startState, changeTodoListFilterAC({
         filter: newFilter,
         id: todolistId2
@@ -105,3 +90,19 @@ test('ids should be equals', () => {
     expect(idFromTasks).toBe(action.payload.todolist.id);
     expect(idFromTodolists).toBe(action.payload.todolist.id);
 });
+test('todolists should be added', () => {
+
+    const action = setTodolistsAC({todolists: startState})
+    const endState = todoListsReducer([], action)
+    expect(endState.length).toBe(2)
+
+})
+test('correct entity status of todolist should be changed', () => {
+    let newStatus:RequestStatusType = 'loading'
+
+    const action = changeTodolistEntityStatusAC({todolistId:todolistId2, status:newStatus})
+    const endState = todoListsReducer(startState, action)
+    expect(endState[0].entityStatus).toBe('idle')
+    expect(endState[1].entityStatus).toBe(newStatus)
+
+})
