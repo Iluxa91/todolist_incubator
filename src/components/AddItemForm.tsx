@@ -8,7 +8,6 @@ type AddItemFormPropsType = {
 }
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
-    console.log('additemform was called')
     const [error, setError] = useState(false)
     let [title, setTitle] = useState("")
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -30,12 +29,6 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     }
     return (
         <div>
-            {/*<input*/}
-            {/*    className={error ? styles.error : ''}*/}
-            {/*    value={title}*/}
-            {/*    onChange={onChangeHandler}*/}
-            {/*    onKeyPress={onKeyPressHandler}*/}
-            {/*/>*/}
             <TextField
             size={'small'}
             variant={"outlined"}
@@ -49,7 +42,6 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
             <IconButton onClick={addItem} disabled={props.disabled}>
                 <AddCircleOutline/>
             </IconButton>
-            {/*{error && <div className={styles.errorMessage}>Title is required</div>}*/}
         </div>
     );
 })

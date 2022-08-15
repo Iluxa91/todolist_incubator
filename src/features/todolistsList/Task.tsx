@@ -8,19 +8,18 @@ import {RequestStatusType} from "../../store/app-reducer";
 import {removeTaskTC, updateTaskTC} from "../../store/tasks-reducer";
 
 
-
 type TaskPropsType = {
-    // onClickHandler: (id: string) => void
     todolistId: string
-    task: TaskType & {entityStatus: RequestStatusType}
+    task: TaskType & { entityStatus: RequestStatusType }
     entityStatus: RequestStatusType
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
-    console.log('task called')
     const dispatch = useAppDispatch()
 
-    const onClickHandler = useCallback((tID: string) => dispatch(removeTaskTC(props.todolistId,tID)), [dispatch, props.todolistId])
+    const onClickHandler = useCallback((taskId: string) => dispatch(removeTaskTC({
+        todolistId: props.todolistId, taskId
+    })), [dispatch, props.todolistId])
 
     const CheckBoxHandler = useCallback((status: TaskStatuses) => {
         dispatch(updateTaskTC(props.task.id, props.todolistId, {status}))
@@ -32,22 +31,20 @@ export const Task = React.memo((props: TaskPropsType) => {
 
     return <li key={props.task.id}>
         <Checkbox
-            disabled={props.task.entityStatus==='loading'}
-            checked={props.task.status===TaskStatuses.Completed}
-            onChange={() => CheckBoxHandler(props.task.status===TaskStatuses.New?TaskStatuses.Completed:TaskStatuses.New)}
-            color={'primary'}
+            disabled={props.task.entityStatus === "loading"}
+            checked={props.task.status === TaskStatuses.Completed}
+            onChange={() => CheckBoxHandler(props.task.status === TaskStatuses.New ? TaskStatuses.Completed : TaskStatuses.New)}
+            color={"primary"}
         />
         <EditableSpan
             title={props.task.title}
             setNewTitle={changeTaskTitle}
-            disabled={props.entityStatus==='loading'||props.task.entityStatus==='loading'}
+            disabled={props.entityStatus === "loading" || props.task.entityStatus === "loading"}
         />
-        {/*<span>{t.title}</span>*/}
         <IconButton
-            disabled={props.task.entityStatus==='loading'}
-            size={'small'}
-            // onClick={() => props.onClickHandler(props.task.id)}
-            onClick={()=>onClickHandler(props.task.id)}>
+            disabled={props.task.entityStatus === "loading"}
+            size={"small"}
+            onClick={() => onClickHandler(props.task.id)}>
             <HighlightOff/></IconButton>
     </li>
 })

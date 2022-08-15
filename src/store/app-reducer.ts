@@ -54,7 +54,6 @@ export type ErrorUtilsDispatchType = ReturnType<typeof setAppStatusAC> | ReturnT
 export const initializeAppTC = (): AppThunk => (dispatch) => {
     authAPI.me()
         .then(res => {
-            debugger
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC({value: true}));
             } else {

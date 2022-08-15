@@ -1,10 +1,10 @@
 import axios, {AxiosResponse} from "axios";
 
 const instance = axios.create({
-    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
+    baseURL: "https://social-network.samuraijs.com/api/1.1/",
     withCredentials: true,
     headers: {
-        'api-key': 'f531eeea-9465-4931-943e-b884b6779012'
+        "api-key": "f531eeea-9465-4931-943e-b884b6779012"
     }
 })
 
@@ -57,9 +57,12 @@ type GetTasksResponseType = {
     totalCount: number
     error: string | null
 }
-
+export type FieldErrorType = {
+    field: string
+    error: string
+}
 export type ResponseType<D = {}> = {
-    fieldsErrors: string[]
+    fieldsErrors: Array<FieldErrorType>
     resultCode: number
     messages: string[]
     data: D
@@ -86,10 +89,10 @@ export type ResponseType<D = {}> = {
 
 export const todolistAPI = {
     getTodolists() {
-        return instance.get<TodolistType[]>('todo-lists')
+        return instance.get<TodolistType[]>("todo-lists")
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title})
+        return instance.post<ResponseType<{ item: TodolistType }>>("todo-lists", {title})
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
@@ -111,14 +114,14 @@ export const todolistAPI = {
     },
 }
 export const authAPI = {
-    login(data:LoginParamsType) {
-        return instance.post<LoginParamsType,AxiosResponse<ResponseType<{userId?:number}>>>('/auth/login', data)
+    login(data: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>("/auth/login", data)
     },
-    me(){
-        return instance.get<ResponseType<{id:number, email:string, login:string}>>('/auth/me')
+    me() {
+        return instance.get<ResponseType<{ id: number, email: string, login: string }>>("/auth/me")
     },
-    logout(){
-        return instance.delete<ResponseType>('auth/login')
+    logout() {
+        return instance.delete<ResponseType>("auth/login")
     }
 }
 
