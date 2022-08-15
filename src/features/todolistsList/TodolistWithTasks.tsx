@@ -32,7 +32,7 @@ export const TodolistWithTasks = React.memo(({todolist, demo = false}: PropsType
     }
 
     const addTask = useCallback((title: string) => {
-        dispatch(addTaskTC(todolist.id, title))
+        dispatch(addTaskTC({todolistId:todolist.id, title}))
     }, [dispatch, todolist.id])
 
     const changeFilterHandler = useCallback((filterValue: FilterValuesType) => {
@@ -40,7 +40,7 @@ export const TodolistWithTasks = React.memo(({todolist, demo = false}: PropsType
     }, [dispatch, todolist.id])
 
     const changeTodoListTitle = useCallback((title: string) => {
-        dispatch(changeTodolistTitleTC(todolist.id, title))
+        dispatch(changeTodolistTitleTC({todolistId: todolist.id,title: title}))
     }, [dispatch, todolist.id])
 
     const removeTodoList = useCallback(() => {

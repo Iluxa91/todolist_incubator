@@ -22,11 +22,15 @@ export const Task = React.memo((props: TaskPropsType) => {
     })), [dispatch, props.todolistId])
 
     const CheckBoxHandler = useCallback((status: TaskStatuses) => {
-        dispatch(updateTaskTC(props.task.id, props.todolistId, {status}))
+        dispatch(updateTaskTC({
+            taskId: props.task.id, todolistId: props.todolistId, model: {status}
+        }))
     }, [dispatch, props.task.id, props.todolistId])
 
     const changeTaskTitle = useCallback((title: string) => {
-        dispatch(updateTaskTC(props.task.id, props.todolistId, {title}))
+        dispatch(updateTaskTC({
+            taskId: props.task.id, todolistId: props.todolistId, model: {title}
+        }))
     }, [dispatch, props.task.id, props.todolistId])
 
     return <li key={props.task.id}>
